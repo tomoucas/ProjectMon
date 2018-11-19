@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script src="js/game.js"></script>
+	<script src="js/attacks.js"></script>
+	<script src="js/monsters.js"></script>
+	<script src="js/levels.js"></script>
+	<script src="js/events.js"></script>
+	<script src="js/sprites.js"></script>
+	<script src="js/panel.js"></script>
+	<script src="js/battle.js"></script>
+	<script src="js/gyms.js"></script>
+	
+	
+	<script type = "text/javascript">
+	function loadDevTools(){
+	
+		//if developer tools are enabled
+		if (devMode){
+		
+		//creating html element for development tools
+		var devTool = $("<button/>")
+			.html("Go to hospital")
+			.click(function(){
+				currentLevel = maps[3]
+				levelIndex = 3
+				LoadLevel()
+			});
+			
+		//adding tool to html div for development tools
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Go to shop")
+			.click(function(){
+				currentLevel = maps[4]
+				levelIndex = 4
+				LoadLevel()
+			});
+		$("#devTools2").append(devTool)
+		
+		
+		var devTool = $("<button/>")
+			.html("Go to spawn")
+			.click(function(){
+				currentLevel = maps[0]
+				levelIndex = 0
+				LoadLevel()
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Go to gym0")
+			.click(function(){
+				currentLevel = maps[7]
+				levelIndex = 7
+				LoadLevel()
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Go to gym1")
+			.click(function(){
+				currentLevel = maps[8]
+				levelIndex = 8
+				LoadLevel()
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Go to finalLevel")
+			.click(function(){
+				currentLevel = maps[10]
+				levelIndex = 10
+				LoadLevel()
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Current Monsters all level 80")
+			.click(function(){
+				for(x=0;x<currentMonsters.length;x++){
+					currentMonsters[x].levelUp(80)
+				}
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Current Monsters all level 1000")
+			.click(function(){
+				for(x=0;x<currentMonsters.length;x++){
+					currentMonsters[x].levelUp(1000)
+				}
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Current Monsters all level 1")
+			.click(function(){
+				for(x=0;x<currentMonsters.length;x++){
+					currentMonsters[x].levelUp(1)
+				}
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Enable all gym bosses")
+			.click(function(){
+				for(x=0;x<gyms.length;x++){
+					gyms[x].bossReady = true
+				}
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Disable all NPCs")
+			.click(function(){
+				npcs = []
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Set XP Modifier to 99999")
+			.click(function(){
+				xpModifier = 99999
+			});
+		$("#devTools2").append(devTool)
+		
+		var devTool = $("<button/>")
+			.html("Set XP Modifier to 150")
+			.click(function(){
+				xpModifier = 150
+			});
+		$("#devTools2").append(devTool)
+		
+		
+	}
+	}
+	</script>	
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-3">
+			<canvas id="canvas"></canvas>
+		</div>
+		<div id="monsters" class="col-sm-3">
+		</div>
+		<div id="buttons" class="col-sm-1">
+			<button onClick = "
+				if(playerCanMove && currentMonsters.length > 1){
+				
+					//removes the currently selected monster from the currentMonsters array
+					currentMonsters.splice(panelIndex,1);
+					if(panelIndex >0){
+						panelIndex--
+					}
+				}
+			">Release Monster</button>
+			<button onClick = "
+				if(playerCanMove){
+				
+					//moves the currently selected monster to index 0 of the currentMonsters array
+					currentMonsters.splice(0, 0, currentMonsters.splice(panelIndex, 1)[0]);
+				}
+			">Move to front</button>
+		</div>
+		<div id="devMode" class="col-sm-1">
+			<button onClick = "
+				
+				$('#devTools').empty();
+				$('#devTools2').empty()
+				devMode = !devMode
+				loadDevTools()
+				
+			">Dev Mode
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div id="devTools" class="col-sm-6">
+		</div>
+		<div id="devTools2" class="col-sm-2">
+		</div>
+	</div>
+</body>
